@@ -1,0 +1,19 @@
+<form (submit)="onSubmit()">
+  <div>
+    <label for="RDAccNo">RD Account No.:</label>
+    <input type="text" id="RDAccNo" [(ngModel)]="RDAccNo" name="RDAccNo" required>
+  </div>
+  <div>
+    <label for="HolderName">Holder Name:</label>
+    <input type="text" id="HolderName" [(ngModel)]="HolderName" name="HolderName" required>
+  </div>
+  <button type="submit">Save Data</button>
+
+
+  <mat-form-field [floatLabel]="getFloatLabelValue()">
+    <mat-label>Both a label and a placeholder</mat-label>
+    <input matInput placeholder="Simple placeholder">
+  </mat-form-field>
+
+
+</form>
