@@ -2,6 +2,7 @@ import { Component, NgModule, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { FloatLabelType } from '@angular/material/form-field';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-client',
@@ -10,14 +11,16 @@ import { FloatLabelType } from '@angular/material/form-field';
 })
 
 export class AddClientComponent {
+  apiResponse: any;
   RDAccNo!: string;
   HolderName!: string;
-    baseUrl: string;
+  CreatedDate!: Date;
+  baseUrl: string;
   floatLabelControl = new FormControl('auto' as FloatLabelType);
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string, private _formBuilder: FormBuilder) {
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string, private _formBuilder: FormBuilder, private router: Router) {
     this.baseUrl = baseUrl;
-   
+
   }
   getFloatLabelValue(): FloatLabelType {
     return this.floatLabelControl.value || 'auto';
@@ -27,8 +30,11 @@ export class AddClientComponent {
   onSubmit() {
     // Send data to the server-side controller for saving to the database.
     const data = {
-      RDAccNo: this.RDAccNo,
-      HolderName: this.HolderName
+      Id: "12344",
+      RDAcc: this.RDAccNo,
+      HolderName: this.HolderName,
+      CreatedDate : this.CreatedDate
+
     };
 
 
@@ -39,8 +45,17 @@ export class AddClientComponent {
 
     this.http.post(apiEndpoint, data).subscribe(
       (response) => {
-        // Handle the successful response from the server here.
-        console.log('Data saved successfully', response);
+
+        this.apiResponse = response;
+       
+        if (this.apiResponse.message == "Success") {
+          console.log("true");
+          alert('Saved');
+          this.RDAccNo = "";
+          this.HolderName = "";
+          this.router.navigate(['/client-list']);
+          
+        }
       },
       (error) => {
         // Handle any errors that occur during the HTTP request.
@@ -49,5 +64,9 @@ export class AddClientComponent {
     );
 
 
+
+
   }
+ 
+
 }

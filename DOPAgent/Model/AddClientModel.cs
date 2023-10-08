@@ -1,10 +1,21 @@
-﻿namespace DOPAgent.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DOPAgent.Model
 {
-    public class AddClientModel
+  
+
+    public class Tbl_RDUsers
     {
-        public long RDAccNo { get; set; }
+
+        [Key]
+        public long Id { get; set; }
+        public long RDAcc { get; set; }
         public string HolderName { get; set; }
-        public DateTime RDOpeningDate { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string? CreatedBy { get; set; }
+        public bool IsActive { get; set; }
+
 
     }
+
 }

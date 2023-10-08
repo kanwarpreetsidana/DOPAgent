@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Add Bootstrap CSS -->
+  <!-- Add your custom CSS if needed -->
+  <style>
+    /* Add your custom CSS here */
+  </style>
+</head>
+<body>
+
+ 
+
+  <div class="container mt-5">
+
+    <button class="custom-button" (click)="NavigateToAdd()" >Add New Client</button>
+
+    <p class="client-list-title">Client List</p>
+
+    <p *ngIf="!clientlistprop?.length"><em>Loading...</em></p>
+
+    <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="clientlistprop.length">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>RD Account No.</th>
+          <th>Holder Name</th>
+          <th>Created Date</th>
+          <th>Created By</th>
+          <th>IsActive</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let clientlisttt of clientlistprop">
+          <td>{{ clientlisttt.id }}</td>
+          <td>{{ clientlisttt.rdAcc }}</td>
+          <td>{{ clientlisttt.holderName }}</td>
+          <td>{{ clientlisttt.createdDate }}</td>
+          <td>{{ clientlisttt.createdBy }}</td>
+          <td>{{ clientlisttt.isActive }}</td>
+        </tr>
+
+
+      </tbody>
+    </table>
+
+
+
+  </div>
+
+
+
+  <!-- Add Bootstrap JS and jQuery if needed -->
+
+</body>
+</html>

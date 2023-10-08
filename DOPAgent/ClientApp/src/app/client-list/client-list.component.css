@@ -1,0 +1,15 @@
+.client-list-title {
+  font-size: 20px;
+  color: black;
+  font-weight: bold;
+}
+
+
+.custom-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 10px;
+  cursor: pointer;
+  border-radius:3px;
+}
