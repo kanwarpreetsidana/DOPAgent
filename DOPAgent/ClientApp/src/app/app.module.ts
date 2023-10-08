@@ -33,6 +33,7 @@ import { ClientListComponent } from './client-list/client-list.component';
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'add-client', component: AddClientComponent },
       { path: 'client-list', component: ClientListComponent },
+      { path: 'add-client/:clientId', component: AddClientComponent },
      
     ])
   ],

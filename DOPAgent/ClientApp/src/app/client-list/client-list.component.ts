@@ -10,25 +10,65 @@ import { Router } from '@angular/router';
 export class ClientListComponent {
 
   public clientlistprop: ClientList[] = [];
+  baseUrl: string;
+  apiResponse: any;
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private router: Router) {
-    console.log(baseUrl + 'AddClientCnt/GetAddClient');
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string, private router: Router) {
+    this.baseUrl = baseUrl;
 
-    http.get<ClientList[]>(baseUrl + 'AddClientCnt/GetAddClient').subscribe({
-      next: result => {
-        this.clientlistprop = result;
-        console.log(result, "testtest");
-        console.log(this.clientlistprop);
-      },
-      
-      error: error => console.error(error)
-    });
+
+    this.getData();
   }
 
   NavigateToAdd() {
 
     this.router.navigate(['/add-client']);
 
+  }
+
+  OnDeleteClick(clientId: number) {
+
+    const apiEndpoint = this.baseUrl + 'AddClientCnt/DeleteClient';
+
+  
+ 
+
+    this.http.post(apiEndpoint, clientId).subscribe(
+      (response) => {
+
+        this.apiResponse = response;
+
+        if (this.apiResponse.message == "Success") {
+    
+          alert('Deleted Successfully');
+          this.getData();
+        }
+      },
+      (error) => {
+    
+        console.error('Error saving data', error);
+      }
+    );
+
+    
+  }
+
+
+  OnUpdateClick(clientId: number) {
+
+    this.router.navigate(['/add-client', clientId]);
+
+  }
+
+
+  getData() {
+    this.http.get<ClientList[]>(this.baseUrl + 'AddClientCnt/GetAddClient').subscribe({
+      next: result => {
+        this.clientlistprop = result;
+      
+      },
+      error: error => console.error(error)
+    });
   }
 
 }

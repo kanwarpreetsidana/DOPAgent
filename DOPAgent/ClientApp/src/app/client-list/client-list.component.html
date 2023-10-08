@@ -28,6 +28,7 @@
           <th>Created Date</th>
           <th>Created By</th>
           <th>IsActive</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -38,6 +39,10 @@
           <td>{{ clientlisttt.createdDate }}</td>
           <td>{{ clientlisttt.createdBy }}</td>
           <td>{{ clientlisttt.isActive }}</td>
+          <td>
+            <button class="custom-button" (click)="OnDeleteClick(clientlisttt.id)"> Delete </button> &nbsp;
+            <button class="custom-button" (click)="OnUpdateClick(clientlisttt.id)"> Update </button>
+          </td>
         </tr>
 
 

@@ -26,17 +26,35 @@ public class AddClientCntController : ControllerBase
         try
         {
 
-
-            var entityToAdd = new Tbl_RDUsers
+            if (userData.Id == 0)
             {
-                RDAcc = userData.RDAcc,
-                HolderName = userData.HolderName,
-                CreatedDate = userData.CreatedDate,
 
-            };
+                var entityToAdd = new Tbl_RDUsers
+                {
+                    RDAcc = userData.RDAcc,
+                    HolderName = userData.HolderName,
+                    CreatedDate = userData.CreatedDate,
 
-            _context.Tbl_RDUsers.Add(entityToAdd);
-            _context.SaveChanges();
+                };
+
+                _context.Tbl_RDUsers.Add(entityToAdd);
+                _context.SaveChanges();
+            }
+
+            else
+            {
+
+                var existing = _context.Tbl_RDUsers.FirstOrDefault(c=> c.Id == userData.Id);
+
+                if (existing != null)
+                {
+                    existing.RDAcc = userData.RDAcc;
+                    existing.HolderName = userData.HolderName;
+                    existing.CreatedDate = userData.CreatedDate;
+                    _context.SaveChanges();
+                }
+            }
+
 
 
         }
@@ -48,6 +66,35 @@ public class AddClientCntController : ControllerBase
 
         return Ok(new { message = "Success" });
     }
+
+
+
+    [HttpPost("DeleteClient")] 
+    public IActionResult DeleteClient([FromBody] long Id)
+    {
+
+        try
+        {
+
+           var client = _context.Tbl_RDUsers.FirstOrDefault(c => c.Id == Id );
+           if(client != null)
+           {
+                _context.Tbl_RDUsers.Remove(client);
+                _context.SaveChanges();
+
+           }
+
+
+        }
+        catch (Exception ex)
+        {
+
+            return Ok(new { message = "Fail" });
+        }
+
+        return Ok(new { message = "Success" });
+    }
+
 
 
 
@@ -70,8 +117,28 @@ public class AddClientCntController : ControllerBase
             return Ok(new { message = "Fail" });
         }
 
-        return Ok(new { message = "Success" });
+   
     }
+
+    [HttpPost("GetAddClientID")]
+    public IActionResult GetAddClientID([FromBody] long Id)
+    {
+
+        try
+        {
+            var results = _context.Tbl_RDUsers.FirstOrDefault(c => c.Id == Id);
+
+            return Ok(results);
+
+        }
+        catch (Exception ex)
+        {
+
+            return Ok(new { message = "Fail" });
+        }
+
+    }
+
 
 
     //public static T ExeScalarQuery<T>(String QueryText, DynamicParameters paras)
