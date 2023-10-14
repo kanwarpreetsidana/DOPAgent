@@ -10,7 +10,8 @@ const PROXY_CONFIG = [
       "/AddClientCnt/InsertAddClient",
       "/AddClientCnt/GetAddClient",
       "/AddClientCnt/DeleteClient",
-      "/AddClientCnt/GetAddClientID"
+      "/AddClientCnt/GetAddClientID",
+       "/AddClientCnt/LoginUser"
    ],
     proxyTimeout: 10000,
     target: target,

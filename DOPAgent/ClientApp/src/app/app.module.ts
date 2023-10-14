@@ -10,6 +10,9 @@ import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { AddClientComponent } from './add-client/add-client.component';
 import { ClientListComponent } from './client-list/client-list.component';
+import { LoginComponent } from './login/login.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth.interceptor';
  
  
 
@@ -21,14 +24,17 @@ import { ClientListComponent } from './client-list/client-list.component';
     CounterComponent,
     FetchDataComponent,
     AddClientComponent,
-    ClientListComponent
+    ClientListComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: LoginComponent, pathMatch: 'full' },
+      { path: 'login', component: LoginComponent, pathMatch: 'full' },
+      { path: 'home', component: HomeComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'add-client', component: AddClientComponent },
@@ -37,7 +43,11 @@ import { ClientListComponent } from './client-list/client-list.component';
      
     ])
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

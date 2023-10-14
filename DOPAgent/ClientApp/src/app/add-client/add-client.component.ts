@@ -34,40 +34,43 @@ export class AddClientComponent {
     this.route.paramMap.subscribe(params => {  
       const clientId = +params.get('clientId');
 
-      const apiEndpoint = this.baseUrl + 'AddClientCnt/GetAddClientID';
+      if (clientId > 0) {
 
-      this.http.post(apiEndpoint, clientId).subscribe(
-        (response) => {
+        const apiEndpoint = this.baseUrl + 'AddClientCnt/GetAddClientID';
 
-        
-          this.apiResponse = response;
-          console.log(this.apiResponse);
-
-          if (this.apiResponse.id > 0) {
-            this.Id = this.apiResponse.id;
-            this.RDAccNo = this.apiResponse.rdAcc;
-            this.HolderName = this.apiResponse.holderName;
-            
+        this.http.post(apiEndpoint, clientId).subscribe(
+          (response) => {
 
 
-            const date = new Date(this.apiResponse.createdDate);
+            this.apiResponse = response;
+            console.log(this.apiResponse);
 
-            // Get the year, month, and day components
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-based, so add 1 and pad with '0'
-            const day = String(date.getDate()).padStart(2, '0');
+            if (this.apiResponse.id > 0) {
+              this.Id = this.apiResponse.id;
+              this.RDAccNo = this.apiResponse.rdAcc;
+              this.HolderName = this.apiResponse.holderName;
 
-            const formattedDate = `${year}-${month}-${day}`;
 
-            this.CreatedDate = formattedDate;
-     
-          }    
-        },
-        (error) => {
-          // Handle any errors that occur during the HTTP request.
-         
-        }
-      );
+
+              const date = new Date(this.apiResponse.createdDate);
+
+              // Get the year, month, and day components
+              const year = date.getFullYear();
+              const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-based, so add 1 and pad with '0'
+              const day = String(date.getDate()).padStart(2, '0');
+
+              const formattedDate = `${year}-${month}-${day}`;
+
+              this.CreatedDate = formattedDate;
+
+            }
+          },
+          (error) => {
+            // Handle any errors that occur during the HTTP request.
+
+          }
+        );
+      }
    
     });
   }
