@@ -21,6 +21,9 @@ namespace DOPAgent.Context
 
         public DbSet<Tbl_RDUsers> Tbl_RDUsers { get; set; }
         public DbSet<LoginUser> loginuser { get; set; }
+        public DbSet<StateMaster> StateMaster { get; set; }
+
+        public DbSet<CityMaster> CityMaster { get; set; }
 
     }
 }

@@ -29,5 +29,26 @@ namespace DOPAgent.Model
         public string? Salt { get; set; }
     }
 
+    public class StateMaster
+    {
+        [Key]
+        public long StateId { get; set; }  
+        public string StateName { get; set; }    
+    }
+
+    public class CityMaster
+    {
+        [Key]
+        public long ID { get; set; }
+        public long StateId { get; set; }
+        public string CityName { get; set; }
+    }
+
+    public class DropDownModel
+    {
+        public string text { get; set; }
+        public string value { get; set; }
+    }
+
 
 }

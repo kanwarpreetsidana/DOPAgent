@@ -1,14 +1,11 @@
-﻿using Dapper;
-using DOPAgent.Context;
+﻿using DOPAgent.Context;
 using DOPAgent.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 
@@ -123,6 +120,51 @@ public class AddClientCntController : ControllerBase
 
     }
 
+    [HttpGet("getstatedata")]
+    public IActionResult getstatedata()
+    {
+
+        try
+        {
+            List<StateMaster> stm = _context.StateMaster.ToList();
+
+            return Ok(stm);
+
+        }
+        catch (Exception ex)
+        {
+
+            return Ok(new { message = "Fail" });
+        }
+
+    }
+
+    [HttpPost("getcitydata")]
+    public IActionResult getcitydata([FromBody] CityMaster  cityMaster )
+    {
+
+        try
+        {
+            var query = _context.CityMaster.Where(c => c.StateId == cityMaster.StateId)
+                         .Select(city => new
+                         {
+                             ID = city.ID,
+                             CityName = city.CityName
+                         })
+                          .ToList();
+
+            return Ok(query);
+
+        }
+        catch (Exception ex)
+        {
+
+            return Ok(new { message = "Fail" });
+        }
+
+    }
+
+
 
     [HttpPost("LoginUser")] // Route for the InsertAddClient action
     public IActionResult LoginUser([FromBody] LoginUser loginuser)
@@ -180,7 +222,7 @@ public class AddClientCntController : ControllerBase
     public string HashPassword(string password)
     {
         // Generate a random salt
-        string salt = BCrypt.Net.BCrypt.GenerateSalt(7);
+        string salt = BCrypt.Net.BCrypt.GenerateSalt();
 
         // Hash the password using the generated salt
         string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, salt);

@@ -9,11 +9,11 @@
 </head>
 <body>
 
- 
+
 
   <div class="container mt-5">
 
-    <button class="custom-button" (click)="NavigateToAdd()" >Add New Client</button>
+    <button class="custom-button" (click)="NavigateToAdd()">Add New Client</button>
 
     <p class="client-list-title">Client List</p>
 
@@ -53,9 +53,25 @@
 
   </div>
 
+  <div>
+    <p>
+      Dropdown menu testing.
+    </p>
+
+    <div>
+      <select [(ngModel)]="selectedValue" (change)="onDropdownChange()">
+        <option *ngFor="let item of dropdownData" [value]="item.stateId">{{ item.stateName }}</option>
+      </select> &nbsp;
+
+      <select >
+        <option *ngFor="let item of dropdownforcityData" [value]="item.id">{{ item.cityName }}</option>
+      </select>
 
 
-  <!-- Add Bootstrap JS and jQuery if needed -->
+    </div>
+
+  </div>
+
 
 </body>
 </html>
