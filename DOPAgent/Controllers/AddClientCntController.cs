@@ -1,5 +1,7 @@
 ﻿using DOPAgent.Context;
+using DOPAgent.Interfaces;
 using DOPAgent.Model;
+using DOPAgent.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +16,7 @@ using System.Text;
 public class AddClientCntController : ControllerBase
 {
     private readonly KanwarContext _context;
+    DeleteClientForTest _deleteClientForTest;   
 
     public AddClientCntController(KanwarContext context)
     {
@@ -98,8 +101,33 @@ public class AddClientCntController : ControllerBase
     }
 
 
+    [HttpPost("DeleteClientForTest")]
+    public IActionResult DeleteClientForTest([FromBody] long Id)
+    {
 
-   
+        try
+        {
+
+            _deleteClientForTest = new TestClass();
+
+            _deleteClientForTest.DeleteClientForTest(Id);
+
+
+
+
+        }
+        catch (Exception ex)
+        {
+
+            return Ok(new { message = "Fail" });
+        }
+
+        return Ok(new { message = "Success" });
+    }
+
+
+
+
 
     [HttpPost("GetAddClientID")]
     public IActionResult GetAddClientID([FromBody] long Id)
