@@ -13,7 +13,8 @@ const PROXY_CONFIG = [
       "/AddClientCnt/GetAddClientID",
       "/AddClientCnt/LoginUser",
       "/AddClientCnt/getstatedata",
-      "/AddClientCnt/getcitydata"
+      "/AddClientCnt/getcitydata",
+      "/chatHub"
    ],
     proxyTimeout: 10000,
     target: target,
